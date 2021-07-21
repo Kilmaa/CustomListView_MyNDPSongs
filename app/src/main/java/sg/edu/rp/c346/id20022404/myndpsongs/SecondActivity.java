@@ -24,10 +24,11 @@ public class SecondActivity extends AppCompatActivity {
     Spinner spinner;
     ArrayAdapter<String> spinnerAdapter;
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        DBHelper dbh = new DBHelper(this);
+        DBHelper dbh = new DBHelper(SecondActivity.this);
         songList.clear();
         songList.addAll(dbh.getAllSongs());
         adapter.notifyDataSetChanged();
@@ -44,16 +45,17 @@ public class SecondActivity extends AppCompatActivity {
 
         setTitle(getTitle().toString() + " ~ " + getResources().getText(R.string.title_activity_second));
 
-        lv = (ListView) this.findViewById(R.id.lv);
-        btn5Stars = (Button) this.findViewById(R.id.btnShow5Stars);
-        spinner = (Spinner) this.findViewById(R.id.spinnerYear);
+        lv = findViewById(R.id.lv);
+        btn5Stars = findViewById(R.id.btnShow5Stars);
+        spinner = findViewById(R.id.spinnerYear);
 
-        DBHelper dbh = new DBHelper(this);
+
+        DBHelper dbh = new DBHelper(SecondActivity.this);
         songList = dbh.getAllSongs();
         years = dbh.getYears();
         dbh.close();
 
-        adapter = new CustomAdapter(this, R.layout.row, songList);
+        adapter = new CustomAdapter(SecondActivity.this, R.layout.row, songList);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,7 +77,7 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
-        spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years);
+        spinnerAdapter = new ArrayAdapter<String>(SecondActivity.this, android.R.layout.simple_spinner_dropdown_item, years);
         spinner.setAdapter(spinnerAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
